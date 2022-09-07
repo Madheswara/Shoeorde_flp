@@ -27,33 +27,35 @@ public class ShoeOrder {
 		try {
 			System.setProperty("webdriver.chrome.driver", "C:\\Users\\et\\eclipse-workspace\\Cncapsulation\\Drivers\\chromedriver.exe");
 			WebDriver driver = new ChromeDriver();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			String url = "https://www.flipkart.com";
-			driver.navigate().to(url);
+			driver.get("https://www.flipkart.com");
 			driver.manage().window().maximize();
 			
-			WebElement element = driver.findElement(By.xpath("(//input[@type='text'])[2]"));
-			element.sendKeys("9578649918");
-			WebElement element2 = driver.findElement(By.xpath("//input[@type='password']"));
-			element2.sendKeys("12217779");
-			driver.findElement(By.xpath("//button[@class='_2KpZ6l _2HKlqd _3AWRsL']")).click();
+//			WebElement element = driver.findElement(By.xpath("(//input[@type='text'])[2]"));
+//			element.sendKeys("9578649918");
+//			WebElement element2 = driver.findElement(By.xpath("//input[@type='password']"));
+//			element2.sendKeys("12217779");
+//			driver.findElement(By.xpath("//button[@class='_2KpZ6l _2HKlqd _3AWRsL']")).click();
+			Thread.sleep(3000);
+			driver.findElement(By.xpath("//button[text()='✕']")).click();
 			driver.findElement(By.name("q")).sendKeys("nike shoes for men");
-			Robot Ro = new Robot();
-			Ro.keyPress(KeyEvent.VK_ENTER);
+			driver.findElement(By.xpath("//button[@type='submit']")).click();
+			WebElement element = driver.findElement(By.xpath("(//a[@title='Downshifter 11 Running Shoes For Men'])[2]"));
+			element.click();
 			String parent = driver.getWindowHandle();
-			Set<String> child = driver.getWindowHandles();
-			for (String child1 : child) {
-				if (!parent.equals(child)) {
-					System.out.println(child1);
+			Set<String> allwindow = driver.getWindowHandles();
+			for (String child1 : allwindow) {
+				if (!parent.equals(child1)) {
+					driver.switchTo().window(child1);
 					}}
-			driver.findElement(By.xpath("(//img[@class='_2r_T1I'])[6]")).click();
+			WebDriverWait waitu = new WebDriverWait(driver, Duration.ofSeconds(30));
+			waitu.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("8")));
 			driver.findElement(By.partialLinkText("8")).click();
 			driver.findElement(By.xpath("//button[@type='button']")).click();
 			driver.findElement(By.xpath("(//input[@type='radio'])[2]")).click();	
 			driver.findElement(By.xpath("//button[contains(text(),'Deliver Here')]")).click();
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-			WebElement until = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Cash on Delivery']")));
-			until.click();
+			WebElement until1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Cash on Delivery']")));
+			until1.click();
 			WebElement element3 = driver.findElement(By.xpath("((//div[@class ='_2jIO64 _3Uc2dx'])[17]//following::img)[1]"));
 			File as = element3.getScreenshotAs(OutputType.FILE);
 			File file = new File("C:\\Users\\et\\eclipse-workspace\\Augclass\\captchaimg");
